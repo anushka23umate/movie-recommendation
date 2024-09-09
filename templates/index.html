@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Recommender System</title>
+    <!-- Embedded CSS -->
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #1e1e2e;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* Prevent horizontal overflow */
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: #282a36;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar a {
+            color: #f8f8f2;
+            text-decoration: none;
+            padding: 8px 15px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .navbar a:hover {
+            background-color: #6272a4;
+            color: white;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px; /* Increase max-width to better fit large screens */
+            margin: 20px auto;
+            padding: 30px;
+        }
+
+        .card {
+            background-color: #282a36;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+
+        .card h1, .card label {
+            color: #f8f8f2;
+        }
+
+        .card button {
+            background-color: #6272a4;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            margin-top: 10px;
+        }
+
+        .card button:hover {
+            background-color: #8be9fd;
+            transform: scale(1.05);
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        /* Horizontal Scrolling Section */
+        .scrollable-section {
+            overflow-x: auto;
+            white-space: nowrap;
+            padding-top: 10px;
+            border-top: 2px solid #6272a4;
+            padding-bottom: 10px; /* Add some padding at the bottom */
+        }
+
+        .recommendations {
+            display: inline-flex;
+            align-items: flex-start;
+            width: 100%;
+            flex-wrap: nowrap;
+        }
+
+        .movie-card {
+            display: inline-block;
+            width: 150px;
+            margin: 0 10px;
+            text-align: center;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .movie-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .movie-card img {
+            width: 100%;
+            height: 225px;
+            object-fit: cover;
+            border-bottom: 4px solid #6272a4;
+        }
+
+        .movie-card p {
+            color: #f8f8f2;
+            font-size: 1em;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+    </div>
+
+    <div class="container">
+        <!-- Card for Input Form -->
+        <div class="card">
+            <h1>Movie Recommender System Using Machine Learning</h1>
+            <form method="post">
+                <label for="selected_movie">Type or select a movie from the dropdown:</label>
+                <select name="selected_movie" id="selected_movie" style="padding: 8px; border-radius: 5px; border: 1px solid #6272a4;">
+                    {% for movie in movie_list %}
+                        <option value="{{ movie }}">{{ movie }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit">Show Recommendation</button>
+            </form>
+        </div>
+
+        <!-- Card for Recommendations -->
+        {% if recommendations %}
+            <div class="card">
+                <div class="scrollable-section">
+                    <div class="recommendations">
+                        {% for name, poster in recommendations %}
+                            <div class="movie-card">
+                                <img src="{{ poster }}" alt="{{ name }} Poster">
+                                <p>{{ name }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

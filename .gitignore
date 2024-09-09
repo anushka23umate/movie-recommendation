@@ -1,0 +1,4 @@
+# Ignore Python virtual environments
+movie_recm/Lib/
+movie_recm/Scripts/
+movie_recm/include/
